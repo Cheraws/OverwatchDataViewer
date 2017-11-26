@@ -6,6 +6,14 @@ import  time
 start_time = time.time()
 file = open("players", "w")
 mains = collections.defaultdict(int)
+character_list = open("characters","r")
+game_count = dict()
+csv_list = []
+for character in character_list:
+    game_count[character.strip()] = "0:0"
+    csv_list += [character.strip()]
+csv_list += ["hours"]
+csv_list += ["rank"]
 for i in range(1, 2):
     leaderboard = requests.get("https://overlog.gg"
                                "/leaderboards/global/rank/" + str(i))
@@ -17,7 +25,8 @@ for i in range(1, 2):
             player_page = BeautifulSoup(player_page.content,"html5lib")
             table_body = player_page.find('tbody')
             rows = table_body.find_all('tr')
-            game_count = collections.defaultdict(int)
+            #game_count = collections.defaultdict(int)
+            game_count = dict.fromkeys(game_count,"0:0")
             '''
             for row in rows:
                 count = 0
@@ -32,7 +41,9 @@ for i in range(1, 2):
                 game_count[cols[0]] = count
             '''
             hours = player_page.find('div', class_='LastUpdated')
+            game_count["hours"] = hours.text.strip()
             rank = player_page.find('div', class_='SkillRating')
+            game_count["rank"] = rank.text.strip().split()[1][0:5]
             rank.text.strip().split()[1][0:5]
             heroes = player_page.find_all('td', class_="ContentCell ContentCell-Hero")
             for hero in heroes:
@@ -40,9 +51,9 @@ for i in range(1, 2):
                 parent = hero.parent
                 for attribute in parent.find_all('td'):
                     attributes += [attribute.text.strip()]
-                games = int(attributes[1] + attributes[2])
-                game_count[attributes[0]] = games
-            mains[max(game_count,key=game_count.get)] += 1
-print (mains)
-print("--- %s seconds ---" % (time.time() - start_time))
+                game_count[attributes[0]] = attributes[1] + ":" + attributes[2]
+            print (game_count)
+            #mains[max(game_count,key=game_count.get)] += 1
+#print (mains)
+#print("--- %s seconds ---" % (time.time() - start_time))
 
