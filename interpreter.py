@@ -18,6 +18,8 @@ with open('data/data.csv', 'r') as csvfile:
     for row in spamreader:
         if first:
             for index, i in enumerate(row):
+                if i == "Soldier: 76":
+                    i = "Soldier76"
                 character_mapping[index] = i
             first = False
         else:
@@ -70,7 +72,9 @@ for character in sorted(mains,key=most_played.get):
 print "number of people who main someone is " + str(mains_total)
 print "percent of mains is " + str(mains_total/float(j)) + " percent"
 
-
+print sorted(one_tricks,key=mains.get)
+print sorted(one_tricks.values())
+print one_tricks_total
 '''
 for character in sorted(mains,key=mains.get):
     print character + "," + str(mains[character]) + " players"
@@ -78,7 +82,6 @@ print "number of people who onetrick is " + str(one_tricks_total)
 for character in sorted(one_tricks,key=one_tricks.get):
     print character + "," + str(one_tricks[character]) + " players"
     print "percentage is " + str((float(one_tricks[character])/one_tricks_total))
-'''
 
 #graphing number of mains
 fig1, ax1 = plt.subplots()
@@ -92,3 +95,4 @@ plt.xticks(y_pos,keys)
 plt.xticks(rotation=90)
 plt.tight_layout()
 plt.show()
+'''
