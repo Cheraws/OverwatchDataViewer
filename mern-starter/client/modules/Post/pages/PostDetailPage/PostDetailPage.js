@@ -18,7 +18,7 @@ import { getPost } from '../../PostReducer';
 function Spacer(props){
   console.log("start of Spacer function");
   console.log("text above me");
-  var content = props.text;
+  var content = props.content;
   const data = {
     labels: content.graphData.labels,
     datasets: [{
@@ -37,19 +37,14 @@ function Spacer(props){
     {content.text.split("\n").map(i => {
       return <div>{i}</div>;
     })}
-    <Doughnut data={data} legend={legendOpts}/>
+    <div className={styles['graph-title']}>{content.graphData.title}</div>
+    <div className={styles['graph']}>
+      <Doughnut data={data} legend={legendOpts}/></div>
     </div>
   )
 }
 
 export function PostDetailPage(props) {
-  const data = {
-    labels: props.post.text[0].graphData.labels,
-    datasets: [{
-      data: props.post.text[0].graphData.numbers,
-      backgroundColor:props.post.text[0].graphData.colors
-    }]
-  };
 
   const legendOpts = {
     display: true,
@@ -58,7 +53,7 @@ export function PostDetailPage(props) {
     reverse: false,
   };
   console.log("here is content");
-  console.log(props.post.text);
+  console.log(props.post.content);
   return (
     <div>
       <Helmet title={props.post.title} />
@@ -66,13 +61,9 @@ export function PostDetailPage(props) {
         <h3 className={styles['post-title']}>{props.post.title}</h3>
         <p className={styles['author-name']}><FormattedMessage id="by" /> {props.post.name}</p>
         <p>
-        {props.post.text.map((item,index) => {
-            return <Spacer text={item}></Spacer>
+        {props.post.content.map((item,index) => {
+            return <Spacer content={item}></Spacer>
         })}
-        </p>
-        <p>
-          <h2 className={styles['image-title']}> One Trick Players </h2>
-          <Doughnut data={data} legend={legendOpts}/>
         </p>
       </div>
     </div>

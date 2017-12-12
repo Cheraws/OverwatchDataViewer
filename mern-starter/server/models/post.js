@@ -10,14 +10,8 @@ const postSchema = new Schema({
   slug: { type: 'String', required: true },
   cuid: { type: 'String', required: true },
   subtext: {type: 'String', required: true},
-  graphData: {
-    labels:{ type:['String'], required: false},
-    numbers:{ type:['String'], required: false},
-    colors:{ type:['String'], required: false}
-  },
   content: {type:[contentSchema], required:true},
   dateAdded: { type: 'Date', default: Date.now, required: true },
-  text: {type:[contentSchema],required:true}
 });
 
 

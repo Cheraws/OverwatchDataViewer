@@ -1,5 +1,5 @@
 .single-post {
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 15px;
   border-radius: 2px;
 }
@@ -11,6 +11,17 @@
   color: #616161;
 }
 
+.graph-title{
+  font-size: 24px;
+  font-weight: 400;
+  color: #616161;
+}
+.graph{
+  font-size: 24px;
+  margin:20px 20px;
+  font-weight: 400;
+  color: #616161;
+}
 .post-title a{
   text-decoration: none;
   color: #616161;
@@ -41,6 +52,7 @@
   font-size: 14px;
   font-style: italic;
 }
+
 
 .post-action a:hover{
   color: #EF5350;

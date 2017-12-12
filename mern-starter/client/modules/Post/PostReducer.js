@@ -4,10 +4,7 @@ import { ADD_POST, ADD_POSTS, DELETE_POST } from './PostActions';
 const initialState = { data: [] };
 
 const PostReducer = (state = initialState, action) => {
-  console.log("performing action");
-  console.log(action);
-  console.log(state);
-  console.log(state.data);
+  console.log("performing api call");
   switch (action.type) {
     case ADD_POST :
       return {
