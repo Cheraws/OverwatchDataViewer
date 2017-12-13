@@ -2,12 +2,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
-import {Doughnut,Pie} from 'react-chartjs-2';
-
+import {Doughnut,Pie,Bar} from 'react-chartjs-2';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 // Import Style
 import styles from '../../components/PostListItem/PostListItem.css';
-
 // Import Actions
 import { fetchPost } from '../../PostActions';
 
@@ -26,20 +25,55 @@ function Spacer(props){
       backgroundColor:content.graphData.colors
     }]
   };
+  const barData = {
+    labels: content.graphData.labels,
+    datasets: [{
+      label: 'Overlog data',
+      data: content.graphData.numbers,
+      backgroundColor:content.graphData.colors
+    }]
+  };
+ 
   const legendOpts = {
     display: true,
     position: 'right',
     fullWidth: true,
     reverse: false,
   };
+  const options = {
+    scales: {
+      yAxes: [{
+          display: true,
+          scaleLabel: {
+              display: true,
+              labelString: 'Value'
+          }
+      }]
+    }
+  };
   return (
     <div>
-    {content.text.split("\n").map(i => {
-      return <div>{i}</div>;
-    })}
-    <div className={styles['graph-title']}>{content.graphData.title}</div>
-    <div className={styles['graph']}>
-      <Doughnut data={data} legend={legendOpts}/></div>
+      {content.text.split("\n").map(i => {
+        return <div>{i}</div>;
+      })}
+      <div className={styles['graph-title']}>{content.graphData.title}</div>
+      <div className={styles['graph']}>
+        <Tabs>
+          <TabList>
+            <Tab>Bar</Tab>
+            <Tab>Doughnut</Tab>
+          </TabList>
+          <TabPanel>
+            <Bar data={barData} 
+             legend={legendOpts} 
+             options={options} />
+          </TabPanel>
+          <TabPanel>
+            <Doughnut data={data} 
+             legend={legendOpts}/>
+          </TabPanel>
+        </Tabs>
+      </div>
     </div>
   )
 }
@@ -53,7 +87,6 @@ export function PostDetailPage(props) {
     reverse: false,
   };
   console.log("here is content");
-  console.log(props.post.content);
   return (
     <div>
       <Helmet title={props.post.title} />
@@ -86,7 +119,6 @@ PostDetailPage.propTypes = {
   post: PropTypes.shape({
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     cuid: PropTypes.string.isRequired,
   }).isRequired,

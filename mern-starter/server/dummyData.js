@@ -38,11 +38,11 @@ export default function () {
       "Symmetra":"#E0FFFF"
     }
     
-    const content1 = `Hi, I grabbed some data in order to investigate the effect of one tricks and mains on the meta. Some Caveats. \n
-                      1. Most of the data I grabbed was from the website overlog.gg; as a result, most of the players in the data are in the PC-kR server. \n
-                      2. The data is measured from a range of grandmasters to mid diamond. \n
-                      3. The way that the game measures winrates can create some inaccuracies. \n
-                      4. The data is based on pure W/L, not taking into account time.
+    const content1 = `Hi, I grabbed some data in order to investigate the effect of one tricks and mains on the meta. Some details about the graphs: \n
+                      1.  Most of the data I grabbed was from the website overlog.gg; as a result, most of the players in the data are in the PC-kR server. \n
+                      2.  The data is measured from a range of grandmasters to mid diamond. \n
+                      3.  The way that the game measures winrates can create some inaccuracies, given that wins seem to be based on percentage of game played. \n
+                      4.  The data is based on pure W/L, not taking into game time. \n
                       The percentage of mains is shown below, defined by over a 50 percent playrate.
                       `;
 
@@ -69,7 +69,7 @@ export default function () {
     let label2 = ['Bastion', 'Sombra', 'Reaper', 'Doomfist', 'Moira', 'Orisa', 'Soldier76', 'Pharah', 'Mei', 'Torbjörn', 'Zarya', 'Reinhardt', 'Symmetra', 'Lúcio', 'Winston', 'Tracer', 'Hanzo', 'Roadhog', 'Widowmaker', 'McCree', 'Zenyatta', 'Junkrat', 'Genji', 'Ana', 'D.Va', 'Mercy']
     let number2 = [4, 5, 6, 12, 13, 14, 15, 17, 21, 21, 23, 28, 28, 31, 33, 35, 40, 58, 61, 62, 65, 76, 78, 95, 158, 1618]
     let color2 = []
-    for (let character of label1){
+    for (let character of label2){
       if (character in characterDictionary){
         color2.push(characterDictionary[character]);
       }
