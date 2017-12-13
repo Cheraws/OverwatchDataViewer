@@ -12,9 +12,6 @@ import sanitizeHtml from 'sanitize-html';
  */
 export function getPosts(req, res) {
   Post.find().sort('-dateAdded').exec((err, posts) => {
-    console.log("Hi there?");
-    console.log(posts);
-    console.log(posts.text);
     if (err) {
       res.status(500).send(err);
     }

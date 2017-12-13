@@ -4,12 +4,12 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import {Doughnut,Pie,Bar} from 'react-chartjs-2';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import renderGraph from '../../components/PostListItem/graphs';
 
 // Import Style
 import styles from '../../components/PostListItem/PostListItem.css';
 // Import Actions
 import { fetchPost } from '../../PostActions';
-
 // Import Selectors
 import { getPost } from '../../PostReducer';
 
@@ -18,62 +18,14 @@ function Spacer(props){
   console.log("start of Spacer function");
   console.log("text above me");
   var content = props.content;
-  const data = {
-    labels: content.graphData.labels,
-    datasets: [{
-      data: content.graphData.numbers,
-      backgroundColor:content.graphData.colors
-    }]
-  };
-  const barData = {
-    labels: content.graphData.labels,
-    datasets: [{
-      label: 'Overlog data',
-      data: content.graphData.numbers,
-      backgroundColor:content.graphData.colors
-    }]
-  };
- 
-  const legendOpts = {
-    display: true,
-    position: 'right',
-    fullWidth: true,
-    reverse: false,
-  };
-  const options = {
-    scales: {
-      yAxes: [{
-          display: true,
-          scaleLabel: {
-              display: true,
-              labelString: 'Value'
-          }
-      }]
-    }
-  };
+  const graph = renderGraph(content.graphData);
   return (
     <div>
       {content.text.split("\n").map(i => {
         return <div>{i}</div>;
       })}
       <div className={styles['graph-title']}>{content.graphData.title}</div>
-      <div className={styles['graph']}>
-        <Tabs>
-          <TabList>
-            <Tab>Bar</Tab>
-            <Tab>Doughnut</Tab>
-          </TabList>
-          <TabPanel>
-            <Bar data={barData} 
-             legend={legendOpts} 
-             options={options} />
-          </TabPanel>
-          <TabPanel>
-            <Doughnut data={data} 
-             legend={legendOpts}/>
-          </TabPanel>
-        </Tabs>
-      </div>
+      <div className={styles['graph']}>{graph}</div>
     </div>
   )
 }
@@ -93,11 +45,11 @@ export function PostDetailPage(props) {
       <div className={`${styles['single-post']} ${styles['post-detail']}`}>
         <h3 className={styles['post-title']}>{props.post.title}</h3>
         <p className={styles['author-name']}><FormattedMessage id="by" /> {props.post.name}</p>
-        <p>
+        <div>
         {props.post.content.map((item,index) => {
             return <Spacer content={item}></Spacer>
         })}
-        </p>
+        </div>
       </div>
     </div>
   );
