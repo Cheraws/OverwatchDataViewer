@@ -57,7 +57,7 @@ app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', posts);
-
+console.log('past the parser?');
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
   console.log("rendering full page now!");
@@ -105,6 +105,7 @@ const renderError = err => {
 // Server Side Rendering based on routes matched by React-router.
 app.use((req, res, next) => {
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
+    console.log("are we running something?");
     if (err) {
       return res.status(500).end(renderError(err));
     }

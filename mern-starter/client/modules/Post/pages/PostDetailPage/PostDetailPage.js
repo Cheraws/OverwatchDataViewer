@@ -19,6 +19,7 @@ function Spacer(props){
   console.log("text above me");
   var content = props.content;
   const graph = renderGraph(content.graphData);
+
   return (
     <div>
       {content.text.split("\n").map(i => {

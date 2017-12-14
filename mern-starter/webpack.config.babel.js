@@ -22,8 +22,8 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
+        test:/\.css$/,
+        exclude: ['/node_modules/','/client/modules/Post/components/PostListItem/graphs.js/'],
         loader: 'style-loader!css-loader?localIdentName=' + cssModulesIdentName + '&modules&importLoaders=1&sourceMap!postcss-loader',
       },
       {

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import 'react-tabs/style/react-tabs.css';
 import {Doughnut,Pie,Bar} from 'react-chartjs-2';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 export default function renderGraph(graphData){
   const data = {
@@ -12,7 +12,7 @@ export default function renderGraph(graphData){
       backgroundColor:graphData.colors
     }]
   };
- 
+
   const legendOpts = {
     display: true,
     position: 'right',
@@ -33,10 +33,10 @@ export default function renderGraph(graphData){
   return (
        <Tabs>
           <TabList>
-            <Tab>Bar</Tab>
-            <Tab>Doughnut</Tab>
-          </TabList>
-          <TabPanel>
+            <Tab >Bar</Tab>
+            <Tab >Doughnut</Tab>
+          </TabList >
+          <TabPanel >
             <Bar data={data}
              legend={legendOpts}
              options={options} />
