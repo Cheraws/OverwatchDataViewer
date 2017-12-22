@@ -7,7 +7,6 @@ const contentSchema = new Schema ({
   graphData: {
     labels:{ type:['String'], required: false},
     numbers:{ type:['String'], required: false},
-    colors:{ type:['String'], required: false},
     title:{ type:['String'], required: false}
   },
 });

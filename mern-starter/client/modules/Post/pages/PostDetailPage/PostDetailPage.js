@@ -25,7 +25,6 @@ function Spacer(props){
       {content.text.split("\n").map(i => {
         return <div>{i}</div>;
       })}
-      <div className={styles['graph-title']}>{content.graphData.title}</div>
       <div className={styles['graph']}>{graph}</div>
     </div>
   )

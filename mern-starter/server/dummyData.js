@@ -46,39 +46,24 @@ export default function () {
                       The percentage of mains is shown below, defined by over a 50 percent playrate.
                       `;
 
-    const content2 =  ` As we can see, while there is a significant number of mercy mains, the number is not more than half. Genji and Dva seem to be \n
-                        be the next most popular characters. Winston rounds out as the most popular main tank. \n
-                        In comparison, the number of one tricks, defined as over 80 percent playrate, is shown below.
-                      `;
+    const content2 =  ` As we can see, while there is a significant number of mercy mains, the number is not more than half. Genji and Dva seem to be the next most popular characters. Winston rounds out as the most popular main tank. In comparison, the number of one tricks, defined as over 80 percent playrate, is shown below.`;
 
-    let number1 = [13, 18, 19, 26, 38, 41, 49, 50, 51, 76, 91, 110, 133, 164, 184, 241, 243, 246, 351, 368, 454, 461, 566, 662, 695, 3047]
-    let label1 = ['Sombra', 'Reaper', 'Bastion', 'Orisa', 'Doomfist', 'Torbjörn', 'Symmetra', 'Moira', 'Mei', 'Soldier76', 'Pharah', 'Lúcio', 'Hanzo', 'Zarya', 'Reinhardt', 'Widowmaker', 'Roadhog', 'Junkrat', 'Tracer', 'Winston', 'Zenyatta', 'McCree', 'Ana', 'D.Va', 'Genji', 'Mercy']
-    let color1 = []
-    for (let character of label1){
-      if (character in characterDictionary){
-        color1.push(characterDictionary[character]);
-      }
-    }
 
-    const text1 = new Content({text:content1})
+    let label1 = ['Bastion', 'Sombra', 'Orisa', 'Reaper', 'Torbjörn', 'Doomfist', 'Mei', 'Symmetra', 'Soldier76', 'Pharah', 'Hanzo', 'Moira', 'Lúcio', 'Reinhardt', 'Zarya', 'Junkrat', 'Roadhog', 'Widowmaker', 'Tracer', 'Winston', 'McCree', 'Zenyatta', 'Ana', 'Genji', 'D.Va', 'Mercy'];
+    let number1 = [15, 16, 27, 28, 40, 44, 46, 62, 83, 90, 118, 119, 128, 156, 174, 252, 262, 296, 360, 402, 462, 504, 547, 654, 711, 2889];
+
+    const text1 = new Content({text:content1});
     text1.graphData.labels = label1;
     text1.graphData.numbers = number1;
-    text1.graphData.colors = color1;
-    text1.graphData.title = "Main percentages";
+    text1.graphData.title = "Mains";
 
-    let label2 = ['Bastion', 'Sombra', 'Reaper', 'Doomfist', 'Moira', 'Orisa', 'Soldier76', 'Pharah', 'Mei', 'Torbjörn', 'Zarya', 'Reinhardt', 'Symmetra', 'Lúcio', 'Winston', 'Tracer', 'Hanzo', 'Roadhog', 'Widowmaker', 'McCree', 'Zenyatta', 'Junkrat', 'Genji', 'Ana', 'D.Va', 'Mercy']
-    let number2 = [4, 5, 6, 12, 13, 14, 15, 17, 21, 21, 23, 28, 28, 31, 33, 35, 40, 58, 61, 62, 65, 76, 78, 95, 158, 1618]
-    let color2 = []
-    for (let character of label2){
-      if (character in characterDictionary){
-        color2.push(characterDictionary[character]);
-      }
-    }
-    const text2 = new Content({text:content2})
+    let label2 = ['Bastion', 'Sombra', 'Doomfist', 'Reaper', 'Pharah', 'Soldier76', 'Orisa', 'Torbjörn', 'Zarya', 'Mei', 'Moira', 'Reinhardt', 'Hanzo', 'Winston', 'Symmetra', 'Lúcio', 'Tracer', 'McCree', 'Roadhog', 'Zenyatta', 'Widowmaker', 'Genji', 'Junkrat', 'Ana', 'D.Va', 'Mercy'];
+    let number2 = [5, 7, 9, 11, 14, 15, 15, 18, 19, 21, 27, 29, 35, 38, 38, 39, 49, 59, 67, 71, 72, 77, 87, 96, 154, 1543];
+
+    const text2 = new Content({text:content2});
     text2.graphData.labels = label2;
     text2.graphData.numbers = number2;
-    text2.graphData.colors = color2;
-    text2.graphData.title = "One Trick percentages";
+    text2.graphData.title = "One Tricks";
 
     const subtext1 = "Running some numbers on one-tricks and mains based on some data"
     const post1 = new Post({ 

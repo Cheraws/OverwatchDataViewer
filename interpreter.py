@@ -13,7 +13,7 @@ most_played = collections.defaultdict(int)
 j = 0
 main_win_loss = collections.defaultdict(lambda:[0,0])
 secondary_win_loss = collections.defaultdict(lambda:[0,0])
-with open('data/data.csv', 'r') as csvfile:
+with open('data/december_18_2017.csv', 'r') as csvfile:
     spamreader = csv.reader(csvfile)
     for row in spamreader:
         if first:
@@ -40,10 +40,9 @@ with open('data/data.csv', 'r') as csvfile:
             most_played[most_played_char] += 1
             if max(score_list) >= 0.5 * games:
                 hasMain = True
+                mains[most_played_char] += 1
                 if max(score_list) >= 0.8 * games:
                     one_tricks[most_played_char] += 1
-                else:
-                    mains[most_played_char] += 1
             for character in ind_win_loss:
                 wins = ind_win_loss[character][0]
                 losses = ind_win_loss[character][1]
@@ -72,8 +71,13 @@ for character in sorted(mains,key=most_played.get):
 print "number of people who main someone is " + str(mains_total)
 print "percent of mains is " + str(mains_total/float(j)) + " percent"
 
-print sorted(one_tricks,key=mains.get)
+print sorted(one_tricks,key=one_tricks.get)
 print sorted(one_tricks.values())
+
+
+print sorted(mains,key=mains.get)
+print sorted(mains.values())
+
 print one_tricks_total
 '''
 for character in sorted(mains,key=mains.get):

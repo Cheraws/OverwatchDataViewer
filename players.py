@@ -13,14 +13,14 @@ csv_list = []
 for character in character_list:
     game_count[character.strip()] = "0:0"
     csv_list += [character.strip()]
-csv_list += ["hours"]
+#csv_list += ["hours"]
 csv_list += ["rank"]
 csv = open("players.csv", "w")
 columnTitleRow = ""
 for key in csv_list:
     columnTitleRow += key + ","
 csv.write(columnTitleRow[:-1]+"\n")
-for i in range(1, 300):
+for i in range(1, 501):
     print(str(i) + " page opened")
     leaderboard = requests.get("https://overlog.gg"
                                "/leaderboards/global/rank/" + str(i))
@@ -47,8 +47,8 @@ for i in range(1, 300):
                 cols[2] = ",".join(cols[2].split())
                 game_count[cols[0]] = count
             '''
-            hours = player_page.find('div', class_='LastUpdated')
-            game_count["hours"] = hours.text.strip()
+            #hours = player_page.find('div', class_='LastUpdated')
+            #game_count["hours"] = hours.text.strip()
             rank = player_page.find('div', class_='SkillRating')
             game_count["rank"] = rank.text.strip().split()[1][0:5].replace(",","")
             rank.text.strip().split()[1][0:5]
