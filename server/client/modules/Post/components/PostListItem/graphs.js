@@ -9,11 +9,11 @@ let colorDictionary = {
   "Zenyatta":"#F5DEB3",
   "Roadhog":"#A52A2A",
   "Zarya":"#FF1493",
-  "Mercy":"#FAFAD2",
+  "Mercy":"#F0E68C",
   "McCree":"#FF0000",
   "Genji":"#ADFF2F",
   "Ana":"#0000FF",
-  "Junkrat":"	#FF8C00",
+  "Junkrat":"	#FFA500",
   "Widowmaker":"#9370DB",
   "Orisa":"#66CDAA",
   "Soldier76":"#191970",
@@ -30,7 +30,7 @@ let colorDictionary = {
   "Mei": "#ADD8E6",
   "Bastion": "#D3D3D3",
   "Symmetra":"#E0FFFF",
-  "Other":"#FAA500"
+  "Other":"#E6E6FA"
 }
 
 function simplifyPieData(graphData){
