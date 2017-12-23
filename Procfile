@@ -1,1 +1,1 @@
-web: npm run bs --prefix web
+web: npm run bs --prefix server
