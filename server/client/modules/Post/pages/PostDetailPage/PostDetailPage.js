@@ -4,7 +4,6 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import {Doughnut,Pie,Bar} from 'react-chartjs-2';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import renderGraph from '../../components/PostListItem/graphs';
 import {Graph} from '../../components/PostListItem/graphs';
 // Import Style
 import styles from '../../components/PostListItem/PostListItem.css';
@@ -20,8 +19,8 @@ function Spacer(props){
   console.log("start of Spacer function");
   console.log("text above me");
   var content = props.content;
-  const graphValue = renderGraph.call(this,content.graphData);
   //const graph2 = new graph(content.graphData);
+  console.log("Spacer is getting called again??????");
   return (
     <div>
       {content.text.split("\n").map(i => {
