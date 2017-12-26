@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {Doughnut,Pie,Bar} from 'react-chartjs-2';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import renderGraph from '../../components/PostListItem/graphs';
-
+import {Graph} from '../../components/PostListItem/graphs';
 // Import Style
 import styles from '../../components/PostListItem/PostListItem.css';
 // Import Actions
@@ -14,18 +14,20 @@ import { fetchPost } from '../../PostActions';
 import { getPost } from '../../PostReducer';
 
 
+
+
 function Spacer(props){
   console.log("start of Spacer function");
   console.log("text above me");
   var content = props.content;
-  const graph = renderGraph(content.graphData);
-
+  const graphValue = renderGraph.call(this,content.graphData);
+  //const graph2 = new graph(content.graphData);
   return (
     <div>
       {content.text.split("\n").map(i => {
         return <div>{i}</div>;
       })}
-      <div className={styles['graph']}>{graph}</div>
+      <div className={styles['graph']}> <Graph data={content.graphData} /> </div>
     </div>
   )
 }
