@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const contentSchema = new Schema ({
-  text: { type: 'String', required: true},
+  text: { type: 'String', required: false},
+  type: { type: 'String', required: true},
+  title: {type: 'String', required: false},
   graphData: {
     labels:{ type:['String'], required: false},
     numbers:{ type:['String'], required: false},

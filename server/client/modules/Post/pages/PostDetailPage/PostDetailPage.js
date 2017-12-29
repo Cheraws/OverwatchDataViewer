@@ -16,17 +16,22 @@ import { getPost } from '../../PostReducer';
 
 
 function Spacer(props){
-  console.log("start of Spacer function");
-  console.log("text above me");
   var content = props.content;
   //const graph2 = new graph(content.graphData);
-  console.log("Spacer is getting called again??????");
+  console.log(content.type);
+  console.log("content.type is above me");
+  console.log(content.text);
+  let block = "";
+  if (content.type == "graph"){
+    block = <div className={styles['graph']}> <Graph data={content.graphData} /> </div>
+  }
+  else{
+    block = <div className={styles['graph-title']}>{ content.text}</div>;
+    //block = <div> {content.text.split("\n").map(i => {return <div>{i}</div>;})}</div>
+  }
   return (
     <div>
-      {content.text.split("\n").map(i => {
-        return <div>{i}</div>;
-      })}
-      <div className={styles['graph']}> <Graph data={content.graphData} /> </div>
+      {block}
     </div>
   )
 }
