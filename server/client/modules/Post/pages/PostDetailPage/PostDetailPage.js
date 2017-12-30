@@ -22,15 +22,20 @@ function Spacer(props){
   console.log("content.type is above me");
   console.log(content.text);
   let block = "";
+  let title = "";
+  if(content.title != null){
+    title = <div className={styles['bold-title']}>{content.title}</div>
+  }
   if (content.type == "graph"){
     block = <div className={styles['graph']}> <Graph data={content.graphData} /> </div>
   }
   else{
-    block = <div className={styles['graph-title']}>{ content.text}</div>;
+    block = <div className={styles['post-text']}>{ content.text}</div>;
     //block = <div> {content.text.split("\n").map(i => {return <div>{i}</div>;})}</div>
   }
   return (
     <div>
+      {title}
       {block}
     </div>
   )
