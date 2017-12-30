@@ -3,6 +3,9 @@ import Content from './models/content';
 import React from 'react';
 import {Text} from 'react-native';
 export default function () {
+  Post.remove(function(err,removed) {
+    // where removed is the count of removed documents
+  });
   Post.count().exec((err, count) => {
     if (count > 0) {
       console.log("count is greater than 0");
@@ -40,12 +43,13 @@ export default function () {
     content = new Content({type:"graph",graphData:graphData});
     contents.push(content);
 
-    let title = "Mercy and Zen are the most popular support picks"
-    text =    "Mercy and Zen are the mains of choice with each one dwarfing their predecessors. " +
-      "Oddly enough, despite Korea's reputation for only playing optimal supports, " +
+    let title = "Mercy and Ana are the most popular supports to main"
+    text =    "Mercy and Zen are considered the meta supports, but there are still " +
+      "a good amount of Ana mains. Despite Korea's reputation for playing meta, " +
       "Ana is disproportionally represented relative to her reputation in the meta. " +
-      "Lucio has received a severe drop in maining due to being replaced" +
-      " by Mercy. Moira doesn't have very many who main her, due to being only a month old."
+      "On the other hand, the supposedly meta-proof Lucio has received a severe drop " +      "in maining due to the rise of Mercy." +
+      " Moira doesn't have very many who main her, due to being only a month old "+ 
+      " and being outclassed by Mercy."
     content = new Content({type:"text", text:text,title:title});
     contents.push(content);
 

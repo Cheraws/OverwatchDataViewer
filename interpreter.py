@@ -28,6 +28,7 @@ with open('data/december_18_2017.csv', 'r') as csvfile:
             score_list = []
             ind_win_loss = {}
             games = 0
+            rank = 5000
             for index, score in enumerate(row):
                 character = character_mapping[index]
                 if index <= 25:
@@ -36,6 +37,11 @@ with open('data/december_18_2017.csv', 'r') as csvfile:
                     ind_win_loss[character] = [int(wins),int(losses)]
                     games += score_total
                     score_list += [score_total]
+                if index == 26:
+                    rank = score
+            print rank
+            if rank != 'Ratin' and int(rank) < 4000:
+                break;
             most_played_char = character_mapping[score_list.index(max((score_list)))]
             most_played[most_played_char] += 1
             if max(score_list) >= 0.5 * games:

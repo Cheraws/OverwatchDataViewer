@@ -38,21 +38,28 @@ let DPS = ['Doomfist', 'Genji', 'McCree', 'Pharah', 'Reaper', 'Soldier76', 'Somb
 let Tanks = ['D.Va', 'Orisa', 'Reinhardt', 'Roadhog', 'Winston', 'Zarya'];
 let Supports = ['Ana', 'Lúcio', 'Mercy', 'Moira', 'Symmetra', 'Zenyatta'];
 
-function simplifyPieData(graphData){
-  const characters = graphData.labels.slice(21,26);
-  const numbered = graphData.numbers.slice(21,26);
-  characters.push("Other");
-  const remainder = graphData.numbers.slice(0,21);
-  let remainderValue = 0;
-  for(let i = 0; i < 21; i++){
-    remainderValue += parseInt(remainder[i]);
+function cleanData(characters,numbers){
+  let length =  characters.length;
+  let start = Math.max(0, length - 10);
+  let newCharacters = [];
+  let newNumbers = [];
+  for(let j = start; j < length; j++){
+    newCharacters.push(characters[j]);
+    newNumbers.push(numbers[j]);
   }
-  numbered.push(remainderValue);
-  const colors = colorAssignment(characters);
+  let remainder = 0;
+  for(let k = 0; k < start; k++){
+    remainder += parseInt(numbers[k]);
+  }
+  if(remainder > 0){
+    newCharacters.push("Other");
+    newNumbers.push(remainder);
+  }
+  const colors = colorAssignment(newCharacters);
   const data =  {
-    labels: characters,
+    labels: newCharacters,
     datasets: [{
-      data: numbered,
+      data: newNumbers,
       backgroundColor: colors
     }]
   };
@@ -71,7 +78,6 @@ function specificData(key,dataDict){
       break;
     case "DPS":
       for (let character in dataDict){
-        console.log(character);
         if (DPS.includes(character)){
           characters.push(character);
           number.push(dataDict[character]);
@@ -80,7 +86,6 @@ function specificData(key,dataDict){
       break;
     case "Tanks":
       for (let character in dataDict){
-        console.log(character);
         if (Tanks.includes(character)){
           characters.push(character);
           number.push(dataDict[character]);
@@ -89,7 +94,6 @@ function specificData(key,dataDict){
       break;
     case "Support":
       for (let character in dataDict){
-        console.log(character);
         if (Supports.includes(character)){
           characters.push(character);
           number.push(dataDict[character]);
@@ -97,14 +101,15 @@ function specificData(key,dataDict){
       }
       break;
   }
+  /*
   let data = {
     labels: characters,
     datasets: [{
       data: number,
       backgroundColor:colorAssignment(characters)
     }]
-  };
-  return data;
+  };*/
+  return cleanData(characters,number);
 }
 
 
@@ -152,8 +157,10 @@ export class Graph extends React.Component {
   }
 
   render() {
+  console.log(window.height);
+  console.log("height above me");
   const data = specificData(this.state.title,this.state.dataDict);
-  const pieData = simplifyPieData(this.state.graphData);
+  const pieData = cleanData(this.state.graphData.labels,this.state.graphData.numbers);
   const barLegendOpts = {
     display: false,
     position: 'right',
@@ -184,7 +191,8 @@ export class Graph extends React.Component {
       display: true,
       text: this.state.graphData.title,
       fontSize: 14
-    }
+    },
+    maintainAspectRatio: false
   };
   
   const pieOptions = {
@@ -192,15 +200,16 @@ export class Graph extends React.Component {
       display: true,
       text: this.state.graphData.title,
       fontSize: 14
-    }
+    },
+    responsive: true,
+    maintainAspectRatio: true
   };
 
     return (
      <Tabs>
         <TabList>
           <Tab >Bar</Tab>
-          <Tab >Pie</Tab>
-          <Tab>Full Pie</Tab>
+          <Tab>Pie</Tab>
         </TabList >
         <TabPanel >
           <DropdownButton title={this.state.title} id="bg-nested-dropdown" onSelect={this.handleSelect}>
@@ -213,11 +222,7 @@ export class Graph extends React.Component {
            legend={barLegendOpts}
            options={options} />
         </TabPanel>
-        <TabPanel>
-          <Pie data={pieData}
-           legend={pieLegendOpts}
-           options={pieOptions}/>
-        </TabPanel>
+
         <TabPanel>
           <DropdownButton title={this.state.title} id="bg-nested-dropdown" onSelect={this.handleSelect}>
             <MenuItem eventKey="All">All</MenuItem>
