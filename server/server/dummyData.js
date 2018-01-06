@@ -1,5 +1,6 @@
 import Post from './models/post';
 import Content from './models/content';
+import Graph from './models/graph';
 import React from 'react';
 import {Text} from 'react-native';
 export default function () {
@@ -15,7 +16,36 @@ export default function () {
 
     //post 1
     let contents = [];
-    let text =     "Recently in Overwatch, there has been a long ongoing debate about the effects on ladder from people maining characters," +
+    let graphs = [];
+    //information for graph
+    let label;
+    let number;
+    let graphData;
+    let title;
+    //putting in the object
+    let content;
+    let graph;
+    //text object
+    let text;
+  
+    graphs = []
+    label = ['Tank','Support', 'DPS','Flex']
+    number = [7820, 9869, 17393, 8751]
+    graphData = {
+      labels: label,
+      numbers: number,
+      title: "Mains",
+      type: "roles",
+      tabTitle :"All",
+      graphType : "pie",
+      dataType : 'roles'
+    };
+    graphs.push(graphData);
+    content = new Content({type:"graph",graphs:graphs});
+    contents.push(content);
+
+
+    text =     "Recently in Overwatch, there has been a long ongoing debate about the effects on ladder from people maining characters," +
       "especially those not in the meta. Maining a character is seen by many as the best way " +
       "to learn a character, while others just enjoy playing the character. A more extreme version would be seen as a one-trick, someone" +
       "who spends at least 80 percent of the time as that character. One tricks are especially seen as problems, particularly those that are " +
@@ -28,22 +58,32 @@ export default function () {
       3.   The way that the game measures winrates can create some inaccuracies, given that wins seem to be based on percentage of games played. 
       4.   The playtime is based on number of games played rather than the time spent, given the large variances based on map mode. 
       Now that we covered the basic information, let us first look at the main distribution.`;
-    let content = new Content({type:"text", text:text});
+    content = new Content({type:"text", text:text});
     contents.push(content);
    
 
-
-    let label = ['Bastion', 'Sombra', 'Orisa', 'Reaper', 'Torbjörn', 'Doomfist', 'Mei', 'Symmetra', 'Soldier76', 'Pharah', 'Hanzo', 'Moira', 'Lúcio', 'Reinhardt', 'Zarya', 'Junkrat', 'Roadhog', 'Widowmaker', 'Tracer', 'Winston', 'McCree', 'Zenyatta', 'Ana', 'Genji', 'D.Va', 'Mercy'];
-    let number = [15, 16, 27, 28, 40, 44, 46, 62, 83, 90, 118, 119, 128, 156, 174, 252, 262, 296, 360, 402, 462, 504, 547, 654, 711, 2889];
-    let graphData = {
+    label = ['Bastion', 'Sombra', 'Orisa', 'Reaper', 'Torbjörn', 'Doomfist', 'Mei', 'Symmetra', 'Soldier76', 'Pharah', 'Lúcio', 'Moira', 'Hanzo', 'Zarya', 'Reinhardt', 'Junkrat', 'Widowmaker', 'Roadhog', 'Winston', 'Tracer', 'Zenyatta', 'McCree', 'Ana', 'D.Va', 'Genji', 'Mercy']
+    number = [27, 27, 27, 44, 47, 59, 62, 63, 95, 131, 138, 172, 195, 244, 299, 306, 316, 372, 408, 418, 497, 619, 787, 869, 943, 3928]
+    graphs = [];
+    graphData = {
       labels: label,
       numbers: number,
-      title: "Mains"
+      title: "Mains",
+      tabTitle :"Bar",
+      graphType : "bar",
+      dataType : 'content'
     };
-    content = new Content({type:"graph",graphData:graphData});
+    graph = new Graph(graphData)
+    graphs.push(graph)
+    graphData = Object.assign({}, graphData)
+    graphData.tabTitle = "Pie"
+    graphData.graphType = "pie"
+    graph = new Graph(graphData)
+    graphs.push(graph)
+    content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
-    let title = "Mercy and Ana are the most popular supports to main"
+    title = "Mercy and Ana are the most popular supports to main"
     text =    "Mercy and Zen are considered the meta supports, but there are still " +
       "a good amount of Ana mains. Despite Korea's reputation for playing meta, " +
       "Ana is disproportionally represented relative to her reputation in the meta. " +
@@ -52,7 +92,6 @@ export default function () {
       " and being outclassed by Mercy."
     content = new Content({type:"text", text:text,title:title});
     contents.push(content);
-
 
     title = "Flanker DPS are popular to main, but aren't dominant"
     text =    "Genji has the highest pickrate among DPS, but he isn't significantly " +
@@ -65,14 +104,29 @@ export default function () {
     content = new Content({type:"text", text:text,title:title});
     contents.push(content);
 
-    label = ['Bastion', 'Sombra', 'Doomfist', 'Reaper', 'Pharah', 'Soldier76', 'Orisa', 'Torbjörn', 'Zarya', 'Mei', 'Moira', 'Reinhardt', 'Hanzo', 'Winston', 'Symmetra', 'Lúcio', 'Tracer', 'McCree', 'Roadhog', 'Zenyatta', 'Widowmaker', 'Genji', 'Junkrat', 'Ana', 'D.Va', 'Mercy'];
-    number = [5, 7, 9, 11, 14, 15, 15, 18, 19, 21, 27, 29, 35, 38, 38, 39, 49, 59, 67, 71, 72, 77, 87, 96, 154, 1543];
+    graphs = []
+    label = ['Bastion', 'Sombra', 'Doomfist', 'Reaper', 'Orisa', 'Torbjörn', 'Soldier76', 'Zarya', 'Mei', 'Pharah', 'Symmetra', 'Winston', 'Lúcio', 'Reinhardt', 'Moira', 'Tracer', 'Hanzo', 'Widowmaker', 'McCree', 'Roadhog', 'Zenyatta', 'Junkrat', 'Genji', 'Ana', 'D.Va', 'Mercy']
+    number = [9, 10, 12, 14, 14, 18, 19, 24, 24, 27, 29, 30, 37, 46, 47, 59, 65, 68, 76, 76, 80, 90, 92, 116, 222, 1973]
     graphData = {
       labels: label,
       numbers: number,
-      title: "one tricks"
-    };  
-    content = new Content({type:"graph",graphData:graphData});
+      title: "One tricks",
+      type: "multi"
+    };
+    graphData = Object.assign({}, graphData)
+    graphData.tabTitle = "Bar"
+    graphData.graphType = "bar"
+    graphData.dataType = 'content'
+    graph = new Graph(graphData)
+    graphs.push(graph)
+
+    graphData = Object.assign({}, graphData)
+    graphData.tabTitle = "Pie"
+    graphData.graphType = "pie"
+    graphData.dataType = 'content'
+    graph = new Graph(graphData)
+    graphs.push(graph)
+    content = new Content({type:"graph",graphData:graphData,graphs:graphs});
     contents.push(content);
 
     const subtext1 = "Running some numbers on one-tricks and mains based on some data"

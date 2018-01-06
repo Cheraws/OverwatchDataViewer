@@ -30,7 +30,7 @@ export class App extends Component {
   };
 
   render() {
-    console.log("rendering app now");
+    console.log("rendering app on the client side now");
     return (
       <div>
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
@@ -73,7 +73,7 @@ App.propTypes = {
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
-  console.log("sending in props?");
+  console.log("mapping the props from store");
   return {
     intl: store.intl,
   };

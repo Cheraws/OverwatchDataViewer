@@ -18,16 +18,13 @@ import { getPost } from '../../PostReducer';
 function Spacer(props){
   var content = props.content;
   //const graph2 = new graph(content.graphData);
-  console.log(content.type);
-  console.log("content.type is above me");
-  console.log(content.text);
   let block = "";
   let title = "";
   if(content.title != null){
     title = <div className={styles['bold-title']}>{content.title}</div>
   }
   if (content.type == "graph"){
-    block = <div className={styles['graph']}> <Graph data={content.graphData} /> </div>
+    block = <div className={styles['graph']}> <Graph data={content.graphData} graphs={content.graphs}/> </div>
   }
   else{
     block = <div className={styles['post-text']}>{ content.text}</div>;
@@ -49,7 +46,6 @@ export function PostDetailPage(props) {
     fullWidth: true,
     reverse: false,
   };
-  console.log("here is content");
   return (
     <div>
       <Helmet title={props.post.title} />

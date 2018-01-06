@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 import {Doughnut,Pie,Bar} from 'react-chartjs-2';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+import {RadialChart, Hint} from 'react-vis';
+import { DropdownButton, MenuItem,Tab,Tabs } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css'
 
 let colorDictionary = {
@@ -40,7 +39,7 @@ let Supports = ['Ana', 'Lúcio', 'Mercy', 'Moira', 'Symmetra', 'Zenyatta'];
 
 function cleanData(characters,numbers){
   let length =  characters.length;
-  let start = Math.max(0, length - 10);
+  let start = Math.max(0, length - 7);
   let newCharacters = [];
   let newNumbers = [];
   for(let j = start; j < length; j++){
@@ -101,14 +100,7 @@ function specificData(key,dataDict){
       }
       break;
   }
-  /*
-  let data = {
-    labels: characters,
-    datasets: [{
-      data: number,
-      backgroundColor:colorAssignment(characters)
-    }]
-  };*/
+
   return cleanData(characters,number);
 }
 
@@ -127,114 +119,199 @@ function colorAssignment(characters){
 export class Graph extends React.Component {
   
   constructor(props) {
+    let mobile = false
     super(props);
     console.log("is the constructor running again?");
-    let dataDict = {}
-    let graphData = props.data;
-    for (let i = 0; i < props.data.labels.length; i++) { 
-      dataDict[props.data.labels[i]] = props.data.numbers[i];
+    this.state = {graphData: props.data, 
+                  title: "All" ,
+                  mobile: mobile,
+                  graphs: props.graphs
+                };
+  }
+  
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+    // Triggers a re-render
+    if (window.outerWidth < 500){
+      this.setState({
+        mobile: true
+      });
     }
-    const data = {
-      labels: props.data.labels.slice(),
-      datasets: [{
-        data: props.data.numbers.slice(),
-        backgroundColor:colorAssignment(graphData.labels)
-      }]
-    };
-   let pieData = {
-      labels: props.data.labels.slice(),
-      datasets: [{
-        data: props.data.numbers.slice(),
-        backgroundColor:colorAssignment(graphData.labels)
-      }]
-    };
-    this.state = {graphData: props.data, dataDict: dataDict, title: "All" };
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
+  //Update dimensions when the screen changes size.
+  updateDimensions = () =>{
+    if (window.outerWidth < 500){
+      this.setState({
+        mobile: true
+      });
+    } 
+    else{
+      this.setState({
+        mobile: false
+      });
+    }
+  }
+  makeDataDict = (graphData) => {
+    let dataDict = {}
+    for (let i = 0; i < graphData.labels.length; i++) { 
+      dataDict[graphData.labels[i]] = graphData.numbers[i];
+    }
+    return dataDict;
   }
   handleSelect = (evt) => {
     this.setState((prevState, props) => ({
       title: evt,
     }));
   }
+  makeGraph = (graphType,graphData) => {
 
-  render() {
-  console.log(window.height);
-  console.log("height above me");
-  const data = specificData(this.state.title,this.state.dataDict);
-  const pieData = cleanData(this.state.graphData.labels,this.state.graphData.numbers);
-  const barLegendOpts = {
-    display: false,
-    position: 'right',
-    reverse: false,
-  };
-  const pieLegendOpts = {
-    display: true,
-    position: 'bottom',
-    fullWidth: true,
-    reverse: false,
-  };
-  const options = {
-    scales: {
-      yAxes: [{
-          display: true,
-          scaleLabel: {
-              display: true,
-              labelString: 'Number of Players'
+    let data;
+    if (graphData.dataType == "roles"){
+       data =  {
+        labels: graphData.labels,
+        datasets: [{
+          data: graphData.numbers,
+          backgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
+        }]
+      };
+    }
+    else{
+        let dataDict = this.makeDataDict(graphData);
+        data = specificData(this.state.title,dataDict);
+    }
+    const barLegendOpts = {
+      display: false,
+      position: 'right',
+      reverse: false,
+    };
+    const pieLegendOpts = {
+      display: true,
+      position: 'bottom',
+      fullWidth: true,
+      reverse: false,
+    };
+
+    const pieOptions = {
+      title: {
+        display: true,
+        text: graphData.title,
+        fontSize: 14
+      }
+    };
+    const barOptions = {
+      scales: {
+        yAxes: [{
+            display: true,
+            scaleLabel: {
+                display: true,
+                labelString: 'Number of Players'
+            }
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false
           }
-      }],
-      xAxes: [{
-        ticks: {
-          autoSkip: false
-        }
-      }]
-    },
-    title: {
-      display: true,
-      text: this.state.graphData.title,
-      fontSize: 14
-    },
-    maintainAspectRatio: false
-  };
-  
-  const pieOptions = {
-    title: {
-      display: true,
-      text: this.state.graphData.title,
-      fontSize: 14
-    },
-    responsive: true,
-    maintainAspectRatio: true
-  };
+        }]
+      },
+      title: {
+        display: true,
+        text: graphData.title,
+        fontSize: 14
+      },
+      responsive: true,
+      maintainAspectRatio: true
+    };
+    let graph = <div></div>;
+    if (graphType == "pie"){
+      graph = <Pie data={data}
+              legend={pieLegendOpts}
+	            options={pieOptions}    
+      />
+    }
+    else{
+      graph = <Bar data={data}
+              legend={barLegendOpts}
+	            options={barOptions}    
+            />
+    }
+    if(this.state.mobile == true){
+      console.log("mobile object type");
+      if (graphType == "pie"){
+        graph = <Pie data={data}
+              legend={pieLegendOpts}
+	            options={pieOptions}    
+              height={400}
+              />
+      }
+      else{
+         graph = <Bar data={data}
+              legend={barLegendOpts}
+	            options={barOptions}    
+              height={400}
+              />    
+      }
+        return(
+          <div>
+          <div></div>
+            {graph}
+          </div>
+        );
+    }
+    return(
+      <div>
+      {graph}
+      </div>
+    );
 
+  }
+  comparisonGraph = () => {
+    const graphs = this.state.graphs
+    let tabs = []
+    let graph;
+    for(let i = 0; i < this.state.graphs.length; i++){
+      graph = this.makeGraph(graphs[i].graphType,graphs[i])
+      let tab = {count:i,title:graphs[i].tabTitle,graph:graph}           
+      tabs.push(tab) 
+      console.log(this.state.graphs.length);
+    }
     return (
-     <Tabs>
-        <TabList>
-          <Tab >Bar</Tab>
-          <Tab>Pie</Tab>
-        </TabList >
-        <TabPanel >
-          <DropdownButton title={this.state.title} id="bg-nested-dropdown" onSelect={this.handleSelect}>
-            <MenuItem eventKey="All">All</MenuItem>
-            <MenuItem eventKey="DPS">DPS</MenuItem>
-            <MenuItem eventKey="Support">Support</MenuItem>
-            <MenuItem eventKey="Tanks">Tanks</MenuItem>
-          </DropdownButton>
-          <Bar data={data}
-           legend={barLegendOpts}
-           options={options} />
-        </TabPanel>
-
-        <TabPanel>
-          <DropdownButton title={this.state.title} id="bg-nested-dropdown" onSelect={this.handleSelect}>
-            <MenuItem eventKey="All">All</MenuItem>
-            <MenuItem eventKey="DPS">DPS</MenuItem>
-            <MenuItem eventKey="Support">Support</MenuItem>
-            <MenuItem eventKey="Tanks">Tanks</MenuItem>
-          </DropdownButton>
-          <Pie data={data}
-           legend={pieLegendOpts}
-           options={pieOptions}/>
-        </TabPanel>
+    <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+      {
+        tabs.map(tab => (
+          <Tab eventKey={tab.count+1} title={tab.title}>
+            <div>{this.roleSelect()}</div>
+            <div>{tab.graph}</div>
+          </Tab>
+        ))
+      }
       </Tabs>
+    )
+  }
+  
+  roleSelect = () => {
+    return(
+        <DropdownButton title={this.state.title} id="bg-nested-dropdown" onSelect={this.handleSelect}>
+            <MenuItem eventKey="All">All</MenuItem>
+            <MenuItem eventKey="DPS">DPS</MenuItem>
+            <MenuItem eventKey="Support">Support</MenuItem>
+            <MenuItem eventKey="Tanks">Tanks</MenuItem>
+        </DropdownButton>
+    );
+  }
+
+  render() { 
+  let normalGraph;
+  {
+    normalGraph = this.comparisonGraph()
+  }
+    return (
+      <div>
+        {normalGraph}
+      </div>
   );
   }
 }

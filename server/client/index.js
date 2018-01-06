@@ -10,7 +10,7 @@ import { configureStore } from './store';
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);
 const mountApp = document.getElementById('root');
-console.log("store initialized");
+console.log("in the client index");
 render(
   <AppContainer>
     <App store={store} />
