@@ -162,14 +162,17 @@ export class Graph extends React.Component {
     }
     return dataDict;
   }
+
   handleSelect = (evt) => {
     this.setState((prevState, props) => ({
       title: evt,
     }));
   }
+
   makeGraph = (graphType,graphData) => {
 
     let data;
+    let datasets = [];
     if (graphData.dataType == "roles"){
        data =  {
         labels: graphData.labels,
@@ -179,12 +182,43 @@ export class Graph extends React.Component {
         }]
       };
     }
+    else if (graphData.dataType == "variety"){
+        data = {
+          labels: graphData.labels,
+        datasets: [{
+          data: graphData.numbers,
+          backgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080'],
+          hoverBackgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
+        }]
+        }
+    }
     else{
         let dataDict = this.makeDataDict(graphData);
         data = specificData(this.state.title,dataDict);
     }
+    let colors = ['	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
+    if (graphData.data.length > 0){
+      console.log("graph is multi");
+      for(let i = 0; i < graphData.data.length; i++){
+        let backgroundColor = []
+        for(let j = 0; j< graphData.data[i].numbers.length; j++){
+          backgroundColor.push(colors[i])
+        }
+        console.log(backgroundColor);
+        let dataset = {data:graphData.data[i].numbers, 
+          backgroundColor: backgroundColor,
+          hoverBackgroundColor:  backgroundColor,
+          label:graphData.data[i].barLabel}
+        datasets.push(dataset);
+      }
+      console.log(datasets)
+       data =  {
+        labels: graphData.labels,
+        datasets: datasets
+      };
+    }
     const barLegendOpts = {
-      display: false,
+      display: true,
       position: 'right',
       reverse: false,
     };
@@ -208,7 +242,7 @@ export class Graph extends React.Component {
             display: true,
             scaleLabel: {
                 display: true,
-                labelString: 'Number of Players'
+                labelString: 'win percentage'
             }
         }],
         xAxes: [{

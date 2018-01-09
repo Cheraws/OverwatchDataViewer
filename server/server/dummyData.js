@@ -37,7 +37,7 @@ export default function () {
       title: "Mains",
       type: "roles",
       tabTitle :"All",
-      graphType : "pie",
+      graphType : "bar",
       dataType : 'roles'
     };
     graphs.push(graphData);
@@ -126,7 +126,7 @@ export default function () {
     graphData.dataType = 'content'
     graph = new Graph(graphData)
     graphs.push(graph)
-    content = new Content({type:"graph",graphData:graphData,graphs:graphs});
+    content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
     const subtext1 = "Running some numbers on one-tricks and mains based on some data"
@@ -139,6 +139,92 @@ export default function () {
       subtext: subtext1, 
     });
     Post.create([post1], (error) => {
+      if (!error) {
+        console.log('starter data created');
+      }
+      else{
+        console.log(error);
+        console.log("Data not created properly.");
+      }
+    });
+
+    contents = [];
+    graphs = []
+
+    //graph about play percentages.
+    label = ['Tank','Support', 'DPS','Flex']
+    number = [7820, 9869, 17393, 8751]
+    graphData = {
+      labels: label,
+      numbers: number,
+      title: "Role Mains",
+      type: "roles",
+      tabTitle :"All Ranks",
+      graphType : "pie",
+      dataType : 'roles'
+    };
+    graphs.push(graphData);
+    content = new Content({type:"graph",graphs:graphs});
+    contents.push(content);
+
+    graphs = [];
+    label = ['Good', 'Bad', 'Decent']
+    number = [0.36728552352565674, 0.10704715751308157, 0.5256673189612618]
+    graphData = {
+      labels: label,
+      numbers: number,
+      title: "Probability of getting a good comp",
+      type: "extra",
+      tabTitle :"All",
+      graphType : "pie",
+      dataType : 'variety'
+    };
+    graphs.push(graphData);
+    content = new Content({type:"graph",graphs:graphs});
+    contents.push(content);
+
+
+    graphs = [];
+    label = ['Support','Tank', 'DPS']
+    number = [7820, 9869, 17393, 8751]
+    let labels = ['As Support','As Tank','As Flex','As DPS']
+    let barNumbers = [[53.9, 47.8, 39.9],[48.7, 54.7, 41.6],[52.5, 53.6, 48.1],[49.4, 51.9, 52.6]]
+    let bars = [];
+    for(let i = 0; i< 4; i++){
+      let numberObj = {
+        barLabel: labels[i],
+        numbers: barNumbers[i]
+      }
+      bars.push(numberObj);
+    }
+
+    graphData = {
+      labels: label,
+      numbers: number,
+      data: bars,
+      title: "Winrate on roles based on Main",
+      type: "roles",
+      tabTitle :"All",
+      graphType : "bar",
+      dataType : 'roles'
+    };
+    graphs.push(graphData);
+    content = new Content({type:"graph",graphs:graphs});
+    contents.push(content);
+
+    const post2 = new Post({ 
+      name: 'Cheraws', 
+      title: 'A look into Role Flexibility', 
+      slug: 'role-flexibility', 
+      cuid: 'cikqgkv4q01ck4453fbldn3hd', 
+      content: contents,
+      subtext: subtext1, 
+    });
+
+
+
+    Post.create([post2], (error) => {
+      console.log("post 2 created");
       if (!error) {
         console.log('starter data created');
       }
