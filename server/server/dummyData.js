@@ -57,7 +57,7 @@ export default function () {
       x_axis: "Character",
       y_axis: "numbers",
       title: "Mains",
-      tabTitle :"All Ranks",
+      tabTitle :"All",
       graphType : "bar",
       dataType : 'content'
     };
@@ -66,7 +66,7 @@ export default function () {
     //for GMS
     label = ['Bastion', 'Sombra', 'Hanzo', 'Torbjörn', 'Mei', 'Zarya', 'Reaper', 'Orisa', 'Soldier76', 'Symmetra', 'Doomfist', 'Reinhardt', 'Lúcio', 'Pharah', 'Moira', 'Ana', 'Widowmaker', 'Junkrat', 'McCree', 'Roadhog', 'Winston', 'Tracer', 'Genji', 'Zenyatta', 'D.Va', 'Mercy']
     number = [1, 3, 4, 4, 6, 6, 7, 7, 8, 9, 9, 14, 14, 14, 19, 28, 40, 54, 60, 60, 80, 87, 97, 156, 205, 477]
-    graphData.tabTitle = "Grandmasters"
+    graphData.tabTitle = "GM"
     graphData.labels = label
     graphData.numbers = number
     graph = new Graph(graphData)
@@ -107,14 +107,14 @@ export default function () {
       y_axis: "Numbers",
     };
     graphData = Object.assign({}, graphData)
-    graphData.tabTitle = "All Ranks"
+    graphData.tabTitle = "All"
     graphData.graphType = "bar"
     graphData.dataType = 'content'
     graph = new Graph(graphData)
     graphs.push(graph)
     label = ['Hanzo', 'Zarya', 'Torbjörn', 'Sombra', 'Ana', 'Doomfist', 'Reinhardt', 'Lúcio', 'Pharah', 'Reaper', 'Orisa', 'Mei', 'Moira', 'Winston', 'Symmetra', 'McCree', 'Widowmaker', 'Roadhog', 'Zenyatta', 'Genji', 'Tracer', 'Junkrat', 'D.Va', 'Mercy']
     number = [1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 6, 7, 8, 8, 11, 15, 16, 19, 22, 45, 287]
-    graphData.tabTitle = "Grandmasters"
+    graphData.tabTitle = "GM"
     graphData.labels = label
     graphData.numbers = number
     graph = new Graph(graphData)
@@ -155,7 +155,7 @@ export default function () {
       type: "roles",
       x_axis: "roles",
       y_axis: "Number",
-      tabTitle :"All Ranks",
+      tabTitle :"All",
       graphType : "pie",
       dataType : 'roles'
     };
@@ -165,7 +165,7 @@ export default function () {
     graphData = Object.assign({}, graphData)
     number = [1059,1205,1986,727]
     graphData.numbers = number
-    graphData.tabTitle = "Grandmasters"
+    graphData.tabTitle = "GM"
     graphData.labels = label
     graph = new Graph(graphData)
     graphs.push(graph)
@@ -183,7 +183,7 @@ export default function () {
       x_axis: "Quality",
       y_axis: "Percentage",
       type: "extra",
-      tabTitle :"All Ranks",
+      tabTitle :"All",
       graphType : "pie",
       dataType : 'variety'
     };
@@ -191,7 +191,7 @@ export default function () {
 
     graphData = Object.assign({}, graphData)
     number = [0.30697220801355185,0.1364173520667251,0.5566104399197233]
-    graphData.tabTitle = "Grandmasters"
+    graphData.tabTitle = "GM"
     graphData.labels = label
     graphData.numbers = number
     graph = new Graph(graphData)
@@ -219,10 +219,10 @@ export default function () {
       labels: label,
       numbers: number,
       data: bars,
-      x_axis: "Role",
+      x_axis: "Role Being Played by Main",
       y_axis: "Percentage",
       title: "Winrate on roles based on Main",
-      tabTitle :"All Ranks",
+      tabTitle :"All",
       graphType : "bar",
       dataType : 'roles'
     };
@@ -238,7 +238,7 @@ export default function () {
       bars.push(numberObj);
     }
     graphData.data = bars
-    graphData.tabTitle = "Grandmasters"
+    graphData.tabTitle = "GM"
     graphs.push(graphData);
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);

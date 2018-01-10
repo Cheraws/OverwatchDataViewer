@@ -139,7 +139,8 @@ export class Graph extends React.Component {
     // Triggers a re-render
     if (window.outerWidth < 500){
       this.setState({
-        mobile: true
+        mobile: true,
+        width: window.outerWidth
       });
     }
   }
@@ -233,6 +234,9 @@ export class Graph extends React.Component {
       position: 'right',
       reverse: false,
     };
+    if(this.state.mobile){
+      barLegendOpts.position = 'bottom'
+    }
     if(graphData.data.length == 0){
       barLegendOpts.display = false
     }
@@ -350,11 +354,10 @@ export class Graph extends React.Component {
       console.log(this.state.graphs.length);
     }
     return (
-    <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+    <Tabs defaultActiveKey={1} >
       {
         tabs.map(tab => (
           <Tab eventKey={tab.count+1} title={tab.title}>
-
             <div className={styles['button-left']}>{tab.roleButton}</div>
             <div className={styles['button-right']}>{tab.graphButton}</div>
             <div>{tab.graph}</div>
