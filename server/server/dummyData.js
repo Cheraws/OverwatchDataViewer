@@ -28,21 +28,7 @@ export default function () {
     //text object
     let text;
   
-    graphs = []
-    label = ['Tank','Support', 'DPS','Flex']
-    number = [7820, 9869, 17393, 8751]
-    graphData = {
-      labels: label,
-      numbers: number,
-      title: "Mains",
-      type: "roles",
-      tabTitle :"All",
-      graphType : "bar",
-      dataType : 'roles'
-    };
-    graphs.push(graphData);
-    content = new Content({type:"graph",graphs:graphs});
-    contents.push(content);
+
 
 
     text =     "Recently in Overwatch, there has been a long ongoing debate about the effects on ladder from people maining characters," +
@@ -68,18 +54,24 @@ export default function () {
     graphData = {
       labels: label,
       numbers: number,
+      x_axis: "Character",
+      y_axis: "numbers",
       title: "Mains",
-      tabTitle :"Bar",
+      tabTitle :"All Ranks",
       graphType : "bar",
       dataType : 'content'
     };
     graph = new Graph(graphData)
     graphs.push(graph)
-    graphData = Object.assign({}, graphData)
-    graphData.tabTitle = "Pie"
-    graphData.graphType = "pie"
+    //for GMS
+    label = ['Bastion', 'Sombra', 'Hanzo', 'Torbjörn', 'Mei', 'Zarya', 'Reaper', 'Orisa', 'Soldier76', 'Symmetra', 'Doomfist', 'Reinhardt', 'Lúcio', 'Pharah', 'Moira', 'Ana', 'Widowmaker', 'Junkrat', 'McCree', 'Roadhog', 'Winston', 'Tracer', 'Genji', 'Zenyatta', 'D.Va', 'Mercy']
+    number = [1, 3, 4, 4, 6, 6, 7, 7, 8, 9, 9, 14, 14, 14, 19, 28, 40, 54, 60, 60, 80, 87, 97, 156, 205, 477]
+    graphData.tabTitle = "Grandmasters"
+    graphData.labels = label
+    graphData.numbers = number
     graph = new Graph(graphData)
     graphs.push(graph)
+
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
@@ -111,21 +103,23 @@ export default function () {
       labels: label,
       numbers: number,
       title: "One tricks",
-      type: "multi"
+      x_axis: "Character",
+      y_axis: "Numbers",
     };
     graphData = Object.assign({}, graphData)
-    graphData.tabTitle = "Bar"
+    graphData.tabTitle = "All Ranks"
     graphData.graphType = "bar"
     graphData.dataType = 'content'
     graph = new Graph(graphData)
     graphs.push(graph)
-
-    graphData = Object.assign({}, graphData)
-    graphData.tabTitle = "Pie"
-    graphData.graphType = "pie"
-    graphData.dataType = 'content'
+    label = ['Hanzo', 'Zarya', 'Torbjörn', 'Sombra', 'Ana', 'Doomfist', 'Reinhardt', 'Lúcio', 'Pharah', 'Reaper', 'Orisa', 'Mei', 'Moira', 'Winston', 'Symmetra', 'McCree', 'Widowmaker', 'Roadhog', 'Zenyatta', 'Genji', 'Tracer', 'Junkrat', 'D.Va', 'Mercy']
+    number = [1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 6, 7, 8, 8, 11, 15, 16, 19, 22, 45, 287]
+    graphData.tabTitle = "Grandmasters"
+    graphData.labels = label
+    graphData.numbers = number
     graph = new Graph(graphData)
     graphs.push(graph)
+
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
@@ -159,11 +153,23 @@ export default function () {
       numbers: number,
       title: "Role Mains",
       type: "roles",
+      x_axis: "roles",
+      y_axis: "Number",
       tabTitle :"All Ranks",
       graphType : "pie",
       dataType : 'roles'
     };
+
     graphs.push(graphData);
+    //creating a GM value
+    graphData = Object.assign({}, graphData)
+    number = [1059,1205,1986,727]
+    graphData.numbers = number
+    graphData.tabTitle = "Grandmasters"
+    graphData.labels = label
+    graph = new Graph(graphData)
+    graphs.push(graph)
+
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
@@ -174,12 +180,23 @@ export default function () {
       labels: label,
       numbers: number,
       title: "Probability of getting a good comp",
+      x_axis: "Quality",
+      y_axis: "Percentage",
       type: "extra",
-      tabTitle :"All",
+      tabTitle :"All Ranks",
       graphType : "pie",
       dataType : 'variety'
     };
     graphs.push(graphData);
+
+    graphData = Object.assign({}, graphData)
+    number = [0.30697220801355185,0.1364173520667251,0.5566104399197233]
+    graphData.tabTitle = "Grandmasters"
+    graphData.labels = label
+    graphData.numbers = number
+    graph = new Graph(graphData)
+    graphs.push(graph)
+
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
@@ -187,7 +204,7 @@ export default function () {
     graphs = [];
     label = ['Support','Tank', 'DPS']
     number = [7820, 9869, 17393, 8751]
-    let labels = ['As Support','As Tank','As Flex','As DPS']
+    let labels = ['Support Main','Tank Main','Flex','DPS Main']
     let barNumbers = [[53.9, 47.8, 39.9],[48.7, 54.7, 41.6],[52.5, 53.6, 48.1],[49.4, 51.9, 52.6]]
     let bars = [];
     for(let i = 0; i< 4; i++){
@@ -202,12 +219,26 @@ export default function () {
       labels: label,
       numbers: number,
       data: bars,
+      x_axis: "Role",
+      y_axis: "Percentage",
       title: "Winrate on roles based on Main",
-      type: "roles",
-      tabTitle :"All",
+      tabTitle :"All Ranks",
       graphType : "bar",
       dataType : 'roles'
     };
+    graphs.push(graphData);
+    graphData = Object.assign({}, graphData)
+    barNumbers = [[54.0, 47.8, 39.1],[48.7, 55.1, 41.7],[53.1, 54.5, 49.7],[49.7, 52.6, 54.1]]
+    bars = [];
+    for(let i = 0; i< barNumbers.length; i++){
+      let numberObj = {
+        barLabel: labels[i],
+        numbers: barNumbers[i]
+      }
+      bars.push(numberObj);
+    }
+    graphData.data = bars
+    graphData.tabTitle = "Grandmasters"
     graphs.push(graphData);
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);

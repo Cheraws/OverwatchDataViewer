@@ -24,7 +24,7 @@ function Spacer(props){
     title = <div className={styles['bold-title']}>{content.title}</div>
   }
   if (content.type == "graph"){
-    block = <div className={styles['graph']}> <Graph data={content.graphData} graphs={content.graphs}/> </div>
+    block = <div className={styles['graph']}> <Graph graphs={content.graphs}/> </div>
   }
   else{
     block = <div className={styles['post-text']}>{ content.text}</div>;

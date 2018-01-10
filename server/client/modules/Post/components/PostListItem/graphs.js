@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import {Doughnut,Pie,Bar} from 'react-chartjs-2';
 import {RadialChart, Hint} from 'react-vis';
 import { DropdownButton, MenuItem,Tab,Tabs } from 'react-bootstrap';
+import styles from './PostListItem.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
 let colorDictionary = {
@@ -59,7 +60,8 @@ function cleanData(characters,numbers){
     labels: newCharacters,
     datasets: [{
       data: newNumbers,
-      backgroundColor: colors
+      backgroundColor: colors,
+      hoverBackgroundColor: colors,
     }]
   };
   return data;
@@ -121,11 +123,14 @@ export class Graph extends React.Component {
   constructor(props) {
     let mobile = false
     super(props);
+    //initial graph type
     console.log("is the constructor running again?");
-    this.state = {graphData: props.data, 
-                  title: "All" ,
+    let graphType = props.graphs[0].graphType 
+
+    this.state = { title: "All" ,
                   mobile: mobile,
-                  graphs: props.graphs
+                  graphs: props.graphs,
+                  graphType: graphType
                 };
   }
   
@@ -163,12 +168,16 @@ export class Graph extends React.Component {
     return dataDict;
   }
 
-  handleSelect = (evt) => {
+  handleRoleSelect = (evt) => {
     this.setState((prevState, props) => ({
       title: evt,
     }));
   }
-
+  handleGraphSelect = (evt) => {
+    this.setState((prevState, props) => ({
+      graphType: evt,
+    }));
+  }
   makeGraph = (graphType,graphData) => {
 
     let data;
@@ -178,7 +187,8 @@ export class Graph extends React.Component {
         labels: graphData.labels,
         datasets: [{
           data: graphData.numbers,
-          backgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
+          backgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080'],
+          hoverBackgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
         }]
       };
     }
@@ -193,6 +203,7 @@ export class Graph extends React.Component {
         }
     }
     else{
+        //charaacter based.
         let dataDict = this.makeDataDict(graphData);
         data = specificData(this.state.title,dataDict);
     }
@@ -222,6 +233,9 @@ export class Graph extends React.Component {
       position: 'right',
       reverse: false,
     };
+    if(graphData.data.length == 0){
+      barLegendOpts.display = false
+    }
     const pieLegendOpts = {
       display: true,
       position: 'bottom',
@@ -242,14 +256,19 @@ export class Graph extends React.Component {
             display: true,
             scaleLabel: {
                 display: true,
-                labelString: 'win percentage'
+                labelString: graphData.y_axis
             }
         }],
         xAxes: [{
+          display: true,
           ticks: {
             autoSkip: false
+          },
+          scaleLabel: {
+              display: true,
+              labelString: graphData.x_axis
           }
-        }]
+        }],
       },
       title: {
         display: true,
@@ -300,16 +319,34 @@ export class Graph extends React.Component {
       {graph}
       </div>
     );
-
   }
+
   comparisonGraph = () => {
     const graphs = this.state.graphs
     let tabs = []
+    let queues = []
     let graph;
     for(let i = 0; i < this.state.graphs.length; i++){
-      graph = this.makeGraph(graphs[i].graphType,graphs[i])
-      let tab = {count:i,title:graphs[i].tabTitle,graph:graph}           
-      tabs.push(tab) 
+      let graphType = graphs[i].graphType
+      let roleButton = ""
+      let graphButton = ""
+      if(graphs[i].data.length == 0){
+        graphType = this.state.graphType
+        graphButton = this.graphSelect()
+
+      }
+      graph = this.makeGraph(graphType,graphs[i])
+      if(graphs[i].dataType == "content"){
+        roleButton = (this.roleSelect())
+      }
+
+      let tab = {count:i,
+                 title:graphs[i].tabTitle,
+                 graph:graph,
+                 roleButton:roleButton,
+                 graphButton:graphButton
+                }
+      tabs.push(tab)
       console.log(this.state.graphs.length);
     }
     return (
@@ -317,7 +354,9 @@ export class Graph extends React.Component {
       {
         tabs.map(tab => (
           <Tab eventKey={tab.count+1} title={tab.title}>
-            <div>{this.roleSelect()}</div>
+
+            <div className={styles['button-left']}>{tab.roleButton}</div>
+            <div className={styles['button-right']}>{tab.graphButton}</div>
             <div>{tab.graph}</div>
           </Tab>
         ))
@@ -325,10 +364,19 @@ export class Graph extends React.Component {
       </Tabs>
     )
   }
-  
+
+  graphSelect = () => {
+    return(
+        <DropdownButton title={this.state.graphType} id="bg-nested-dropdown" onSelect={this.handleGraphSelect}>
+            <MenuItem eventKey="pie">pie</MenuItem>
+            <MenuItem eventKey="bar">bar</MenuItem>
+        </DropdownButton>
+    );
+  }
+
   roleSelect = () => {
     return(
-        <DropdownButton title={this.state.title} id="bg-nested-dropdown" onSelect={this.handleSelect}>
+        <DropdownButton title={this.state.title} id="bg-nested-dropdown" onSelect={this.handleRoleSelect}>
             <MenuItem eventKey="All">All</MenuItem>
             <MenuItem eventKey="DPS">DPS</MenuItem>
             <MenuItem eventKey="Support">Support</MenuItem>

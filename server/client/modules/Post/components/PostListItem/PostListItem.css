@@ -11,6 +11,12 @@
   color: #616161;
 }
 
+.button-left{
+  float:left
+}
+.button-right{
+  float:right
+}
 .graph-title{
   font-size: 14px;
   font-weight: 400;
