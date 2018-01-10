@@ -36,14 +36,14 @@ export default function () {
       "to learn a character, while others just enjoy playing the character. A more extreme version would be seen as a one-trick, someone" +
       "who spends at least 80 percent of the time as that character. One tricks are especially seen as problems, particularly those that are " +
       "only useful in specific scenarios like the builders. I was curious as towards the proportion of people maining a character that one trick " +
-      "and if specific characters are more likely to be one-tricked relative to being mained. I gathered some data utilizing overlog.gg, marking mains " +
-      "as those who spend at least 50 percent playtime and one-tricks as 80 percent play time. \n \n" +
+      "and which characters are more likely to be one-tricked relative to being mained. I gathered some data utilizing overlog.gg, marking mains " +
+      "as those who spend at least 50 percent playtime on a character and one-tricks as 80 percent play time. \n \n" +
       `Some details about the graphs: 
     1.   Since overlog.gg is based in Korea, most of the players in the data are in the PC-kR server. 
       2.   Rank is not part of the analysis, but the ranks range from Top 500 to diamond. 
       3.   The way that the game measures winrates can create some inaccuracies, given that wins seem to be based on percentage of games played. 
       4.   The playtime is based on number of games played rather than the time spent, given the large variances based on map mode. 
-      Now that we covered the basic information, let us first look at the main distribution.`;
+      Now that we covered the basic information, let us first look at the distribution among character mains.`;
     content = new Content({type:"text", text:text});
     contents.push(content);
    
@@ -75,24 +75,31 @@ export default function () {
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
-    title = "Mercy and Ana are the most popular supports to main"
+    title = "Mercy is the Most Popular Support to Main by Far"
     text =    "Mercy and Zen are considered the meta supports, but there are still " +
-      "a good amount of Ana mains. Despite Korea's reputation for playing meta, " +
-      "Ana is disproportionally represented relative to her reputation in the meta. " +
-      "On the other hand, the supposedly meta-proof Lucio has received a severe drop " +      "in maining due to the rise of Mercy." +
-      " Moira doesn't have very many who main her, due to being only a month old "+ 
-      " and being outclassed by Mercy."
+      " an odd number of Ana mains in general. Many players especially in the KR servers" +
+      " seem to enjoy maining Ana. Unfortunately for these Ana mains, most of them disappear" +
+      " by GM rank, being largely replaced by Zen mains. Lucio doesn't seem to provide enough" +
+      " utility in the meta, while Moira is largely outclassed by Mercy."
     content = new Content({type:"text", text:text,title:title});
     contents.push(content);
 
-    title = "Flanker DPS are popular to main, but aren't dominant"
-    text =    "Genji has the highest pickrate among DPS, but he isn't significantly " +
-      "above the runner up Mccree. Mccree's popularity may be due to zen and mercy " +
-      "enabling him to 2 shot 200 hp squishies, providing burst damage in comparison " +
-      "to the meta pick in the west, Soldier:76." +
-      "Despite all the outcry about junkrat," +
-      "it seems like he is only the 5th highest picked DPS. Tracer and widow round" +
-      " out the other top picks, with the other picks being niche. "
+    title = "Mccree is Popular in Lower Ranks But Gets Overtaken by Tracer"
+    text =    "Genji has the highest pickrate among DPS overall, but he isn't significantly " +
+              " above the others for all ranks. Mccree and Tracer happen to be the runner ups. " +
+              " Notably, Soldier 76 is very unpopular in Korea, not making top 5 in mained character in the DPS category." + 
+              " If we limit our sample size to only GM players, Tracer becomes a more popular" +
+              " character to main than Mccree, signifying she is indeed a character that scales well with skill." 
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+
+    title = "Dva is Popular with Reinhardt Zarya Falling Out of Favor"
+    text = "Dva is the clear favorite among tanks for all ranks, with Winston as the runner up." +
+           " Her overall mobility and damage potential make her a good choice to main in most scenarios." +
+           " Notably, as the rank goes up, Reinhardt mains and Zarya mains fall off from the meta. This may be" +
+           " because in higher elos, the coordination of dive overwhelms the reliability of static tank strats." +
+           " Hog seems to be the oddball out, maintaining a relatively steady main rate among all the ranks. " +
+           " This may be due to being a tank that works well independently."
     content = new Content({type:"text", text:text,title:title});
     contents.push(content);
 
@@ -142,8 +149,27 @@ export default function () {
       }
     });
 
+    //Post 2 about percentage of who mains what
     contents = [];
     graphs = []
+
+    
+     text = 'While watching some of my favorite streamers,' +
+      ' I noticed that a good amount of players were forced to play off roles' +
+      ' that they were not very comfortable with . ' +
+      ' Curious about their winrates on these heroes, I checked their profiles to' +
+      ' investigate their winrates, trying to see some trend. I noticed a sizable' +
+      ' decrease in winrate, even among the players famous for being flex players.'+
+    `
+
+    ` +
+    'I decided to investigate a dataset of over 40,000 players to figure out how' +
+    ' many mains there are of each role, where main is defined as over 50 percent' +
+    ' played in the role. If a player did not fit this category, I categorized them' +
+    ' as a flex player. An overall distribution can be found below with a tab' +
+    ' that only includes GM players'
+    content = new Content({type:"text", text:text});
+    contents.push(content);
 
     //graph about play percentages.
     label = ['Tank','Support', 'DPS','Flex']
