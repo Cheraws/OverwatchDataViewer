@@ -27,6 +27,8 @@ export default function () {
     let graph;
     //text object
     let text;
+    //subtext
+    let subtext;
   
 
 
@@ -272,10 +274,10 @@ export default function () {
     graphs.push(graphData);
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
-    subtext = "Examining what roles main and the effect on the game"
+    subtext = "Examining how classes are mained and the effect on the game"
     const post2 = new Post({ 
       name: 'Cheraws', 
-      title: 'A Look into Role Flexibility', 
+      title: 'A Look into Role Flexibility and how It Affects Ranked', 
       slug: 'role-flexibility', 
       cuid: 'cikqgkv4q01ck4453fbldn3hd', 
       content: contents,
