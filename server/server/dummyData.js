@@ -103,7 +103,7 @@ export default function () {
            " Notably, as the rank goes up, Reinhardt mains and Zarya mains fall off from the meta. This may be" +
            " because in higher elos, the coordination of dive overwhelms the reliability of static tank strats." +
            " Hog seems to be the oddball out, maintaining a relatively steady main rate among all the ranks. " +
-           " His independence from other tanks makes him a decent tank to main in the chaos of solo queue.
+           " His independence from other tanks makes him a decent tank to main in the chaos of solo queue."
     content = new Content({type:"text", text:text,title:title});
     contents.push(content);
 
