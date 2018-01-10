@@ -32,12 +32,16 @@ export default function () {
 
 
     text =     "Recently in Overwatch, there has been a long ongoing debate about the effects on ladder from people maining characters," +
-      "especially those not in the meta. Maining a character is seen by many as the best way " +
-      "to learn a character, while others just enjoy playing the character. A more extreme version would be seen as a one-trick, someone" +
-      "who spends at least 80 percent of the time as that character. One tricks are especially seen as problems, particularly those that are " +
-      "only useful in specific scenarios like the builders. I was curious as towards the proportion of people maining a character that one trick " +
-      "and which characters are more likely to be one-tricked relative to being mained. I gathered some data utilizing overlog.gg, marking mains " +
-      "as those who spend at least 50 percent playtime on a character and one-tricks as 80 percent play time. \n \n" +
+      " especially those not in the meta. Maining a character is seen by many as the best way" +
+      " to learn a character, while others just enjoy playing the character. A more extreme version would be seen as a one-trick, someone" +
+      " who spends at least 80" +"%" +" of the time as that character." + 
+      ` 
+
+      ` +
+      "One tricks are seen as problems for the game, particularly those who are" +
+      " only useful in specific scenarios like the builders. I was curious about the correlation between mains and the meta. I also wanted to see" +
+      " if certain characters are more likely to be one tricked out of those who are mained.. I gathered some data utilizing overlog.gg, marking mains" +
+      " as those who spend at least 50 percent playtime on a character and one-tricks as 80 percent play time. \n \n" +
       `Some details about the graphs: 
     1.   Since overlog.gg is based in Korea, most of the players in the data are in the PC-kR server. 
       2.   Rank is not part of the analysis, but the ranks range from Top 500 to diamond. 
@@ -99,7 +103,7 @@ export default function () {
            " Notably, as the rank goes up, Reinhardt mains and Zarya mains fall off from the meta. This may be" +
            " because in higher elos, the coordination of dive overwhelms the reliability of static tank strats." +
            " Hog seems to be the oddball out, maintaining a relatively steady main rate among all the ranks. " +
-           " This may be due to being a tank that works well independently."
+           " His independence from other tanks makes him a decent tank to main in the chaos of solo queue.
     content = new Content({type:"text", text:text,title:title});
     contents.push(content);
 
@@ -130,14 +134,14 @@ export default function () {
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
-    const subtext1 = "Running some numbers on one-tricks and mains based on some data"
+    subtext = "Running some numbers on one-tricks and mains based on some data"
     const post1 = new Post({ 
       name: 'Cheraws', 
       title: 'One Tricks and Mains: Which Characters Are the Most Popular?', 
       slug: 'one-tricks', 
       cuid: 'cikqgkv4q01ck7453ualdn3hd', 
       content: contents,
-      subtext: subtext1, 
+      subtext: subtext, 
     });
     Post.create([post1], (error) => {
       if (!error) {
@@ -268,14 +272,14 @@ export default function () {
     graphs.push(graphData);
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
-
+    subtext = "Examining what roles main and the effect on the game"
     const post2 = new Post({ 
       name: 'Cheraws', 
-      title: 'A look into Role Flexibility', 
+      title: 'A Look into Role Flexibility', 
       slug: 'role-flexibility', 
       cuid: 'cikqgkv4q01ck4453fbldn3hd', 
       content: contents,
-      subtext: subtext1, 
+      subtext: subtext 
     });
 
 
