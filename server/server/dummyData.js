@@ -102,7 +102,7 @@ export default function () {
     title = "Dva is Popular with Reinhardt Zarya Falling Out of Favor"
     text = "Dva is the clear favorite among tanks for all ranks, with Winston as the runner up." +
            " Her overall mobility and damage potential make her a good choice to main in most scenarios." +
-           " Notably, as the rank goes up, Reinhardt mains and Zarya mains fall off from the meta. This may be" +
+           " As the rank goes up, Reinhardt mains and Zarya mains fall off from the meta. This may be" +
            " because in higher elos, the coordination of dive overwhelms the reliability of static tank strats." +
            " Hog seems to be the oddball out, maintaining a relatively steady main rate among all the ranks. " +
            " His independence from other tanks makes him a decent tank to main in the chaos of solo queue."
@@ -160,7 +160,7 @@ export default function () {
     graphs = []
 
     
-     text = 'While watching some of my favorite streamers,' +
+    text = 'While watching some of my favorite streamers,' +
       ' I noticed that a good amount of players were forced to play off roles' +
       ' that they were not very comfortable with . ' +
       ' Curious about their winrates on these heroes, I checked their profiles to' +
@@ -172,11 +172,11 @@ export default function () {
     'I decided to investigate a dataset of over 40,000 players to figure out how' +
     ' many mains there are of each role, where main is defined as over 50 percent' +
     ' played in the role. If a player did not fit this category, I categorized them' +
-    ' as a flex player. An overall distribution can be found below with a tab' +
-    ' that only includes GM players'
+    ' as a flex player. An overall distribution can be found below for all ranks'  +
+    ' and GM included'
+
     content = new Content({type:"text", text:text});
     contents.push(content);
-
     //graph about play percentages.
     label = ['Tank','Support', 'DPS','Flex']
     number = [7820, 9869, 17393, 8751]
@@ -205,6 +205,33 @@ export default function () {
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
 
+    title = "DPS is the most common category at all ranks"
+    text = 'Close to 40 percent of people main DPS, and this does not seem to change' +
+            ' as the ranks go up. This seems to indicate that most of the people who main DPS' +
+            ' stick to DPS while attempting to climb out of the ladder.'
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+
+    title = "Flex players decrease as rank rises"
+    text = 'In the overall graph, flex players make around 19' + '%' +
+          ' of the population; however, in Grandmaster, the percentage falls to 14' +
+          '%. Those who do not flex seem to become pecialists in either Support or Tank' + 
+          ' roles eventually.'
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+
+    title = 'So what does this mean for getting a good comp?'
+    text = 'Normally a good' +
+            ' comp is defined as having 2 tanks,2 DPS, and 2 support. In the graph below,' +
+            ' I classifed the 84 different possible comps from the 4 main types as three' +
+            ' cateogries. Good means there are 2 players per role, Decent means that the most unfilled' +
+            ' role is 1, while bad comps have a role that is filled by 0 people. Flexes can fill' + 
+            ' as any role in this example.'
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+
+
+
     graphs = [];
     label = ['Good', 'Bad', 'Decent']
     number = [0.36728552352565674, 0.10704715751308157, 0.5256673189612618]
@@ -221,6 +248,7 @@ export default function () {
     };
     graphs.push(graphData);
 
+
     graphData = Object.assign({}, graphData)
     number = [0.30697220801355185,0.1364173520667251,0.5566104399197233]
     graphData.tabTitle = "GM"
@@ -231,8 +259,27 @@ export default function () {
 
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
+    
+    title = 'Most comps are workable'
+    text = 'The chance of a comp wtih a role completely unfilled is very low at 10 percent.' +
+           ' While a slightly suboptimal comp is fairly common, the most common is 3 DPS, ' + 
+           ' a support, a flex, and a tank player, making a very workable comp. '
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
 
+    title = 'Higher Ranks Can Produce Worse Comps'
+    text = 'With less flexes in higher ranks, compositions can be slightly less optimal.' +
+           ' More people specialize, increasing the odds of getting something like 6 supports on the same' +
+           ' team.'
 
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+
+    title = "So what happens when players play their offrole?"
+    text = 'In over 50 percent of the comps, at least one player has to play an offrole. I calculated the overall win' +
+           ' percentage by recording wins and games for each player and then checked to see what role a player mained.' +
+           ' Once I gathered all player info, I divided the total number of wins over games played. For example, I would check' +
+           ' the winrate of supports mains on the tank category. The results are shown below.'
     graphs = [];
     label = ['Support','Tank', 'DPS']
     number = [7820, 9869, 17393, 8751]
@@ -274,6 +321,43 @@ export default function () {
     graphs.push(graphData);
     content = new Content({type:"graph",graphs:graphs});
     contents.push(content);
+    subtext = "Examining how classes are mained and the effect on the game"
+
+    title = 'Supports and Tank mains suffer most from playing DPS'
+    text = 'When support and tank mains have to play DPS, their winrates are abysmal,' +
+          ' sitting at around a 40 percent winrate. This suggests to me that DPS is the role that' +
+          ' emphasizes specialization. Mechanics learned from support and tank do not replace putting in hours' +
+          ' into DPS. There is no easy DPS for players to fill as, with all the winrates for them being below 50 percent.'
+
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+ 
+    title = 'DPS mains seem to be much more flexible'
+    text = 'On the other hand, while DPS players have slightly worse winrates overall on their mains, they' +
+           ' do not suffer nearly as much for flexing. Many DPS mains enjoy good winrates on Roadhog, Zarya, and' +
+           ' Zenyatta epsecially as offroles. Oddly enough DPS mains tend to have much worse winrates on' +
+           ' Mercy, having a 48 percent winrate in comparison to 55 percent for support mains.'
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+
+ 
+    title = 'Flex mains have good winrates on Tank and Support with slightly worse winrates on DPS'
+    text = 'True to their names, flex players tend to be able to play any role, having a much less drastic' +
+           ' loss in winrate on DPS in comparison to the other types of mains. Meanwhile, they are able to maintain' +
+           ' winrates in support and tank very close to actual mains.'
+
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+
+    title = 'Final Thoughts'
+    text = 'Looking at these numbers, I do not think a role queue is drastically needed. Most of the time, a good comp' +
+           ' can be obtained within matchmaking. What I worry most about is the inability of supports and tank mains to play' +
+           ' DPS. For most of these mains, in order to learn DPS, they have to either severely tank their SR or create a smurf' +
+           ' that is DPS only, ruining the variety of lower skill rating. Introducing more mechanically intensive supports and tanks' +
+           ' could potentially alleviate this issue, but there is no easy solution to this problem.'
+    content = new Content({type:"text", text:text,title:title});
+    contents.push(content);
+
     subtext = "Examining how classes are mained and the effect on the game"
     const post2 = new Post({ 
       name: 'Cheraws', 

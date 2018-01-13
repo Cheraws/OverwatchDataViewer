@@ -124,7 +124,6 @@ export class Graph extends React.Component {
     let mobile = false
     super(props);
     //initial graph type
-    console.log("is the constructor running again?");
     let graphType = props.graphs[0].graphType 
 
     this.state = { title: "All" ,
@@ -210,20 +209,17 @@ export class Graph extends React.Component {
     }
     let colors = ['	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
     if (graphData.data.length > 0){
-      console.log("graph is multi");
       for(let i = 0; i < graphData.data.length; i++){
         let backgroundColor = []
         for(let j = 0; j< graphData.data[i].numbers.length; j++){
           backgroundColor.push(colors[i])
         }
-        console.log(backgroundColor);
         let dataset = {data:graphData.data[i].numbers, 
           backgroundColor: backgroundColor,
           hoverBackgroundColor:  backgroundColor,
           label:graphData.data[i].barLabel}
         datasets.push(dataset);
       }
-      console.log(datasets)
        data =  {
         labels: graphData.labels,
         datasets: datasets
@@ -284,6 +280,14 @@ export class Graph extends React.Component {
     };
     let graph = <div></div>;
     if (graphType == "pie"){
+      //truncating the graph and turning it into a percentage.
+      let oldNumbers = data.datasets[0].data
+      let total = 0
+      for(let i = 0; i< oldNumbers.length; i++){
+        total += parseFloat(oldNumbers[i])
+      }
+      const numbers = data.datasets[0].data.map(x => Math.floor(x/total*1000)/1000);
+      data.datasets[0].data = numbers
       graph = <Pie data={data}
               legend={pieLegendOpts}
 	            options={pieOptions}    
@@ -296,7 +300,6 @@ export class Graph extends React.Component {
             />
     }
     if(this.state.mobile == true){
-      console.log("mobile object type");
       if (graphType == "pie"){
         graph = <Pie data={data}
               legend={pieLegendOpts}
@@ -351,7 +354,6 @@ export class Graph extends React.Component {
                  graphButton:graphButton
                 }
       tabs.push(tab)
-      console.log(this.state.graphs.length);
     }
     return (
     <Tabs defaultActiveKey={1} >
