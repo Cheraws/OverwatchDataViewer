@@ -5,7 +5,7 @@ import { DropdownButton, MenuItem,Tab,Tabs } from 'react-bootstrap';
 import styles from './PostListItem.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-let colorDictionary = {
+let characterColors = {
   "D.Va":"#FFB6C1",
   "Tracer":"#FFA500",
   "Zenyatta":"#F5DEB3",
@@ -34,6 +34,14 @@ let colorDictionary = {
   "Symmetra":"#E0FFFF",
   "Other":"#E6E6FA"
 }
+
+let roleColors = {
+  "DPS Mains":'rgba(114,147,203,1)',
+  "Tank Mains":'rgba(225,151,76,1)',
+  "Flex":'rgba(132,186,91,1)',
+  "Support Mains":'rgba(211,94,96,1)',
+}
+
 let DPS = ['Doomfist', 'Genji', 'McCree', 'Pharah', 'Reaper', 'Soldier76', 'Sombra', 'Tracer','Bastion', 'Hanzo', 'Junkrat', 'Mei', 'Torbjörn', 'Widowmaker'];
 let Tanks = ['D.Va', 'Orisa', 'Reinhardt', 'Roadhog', 'Winston', 'Zarya'];
 let Supports = ['Ana', 'Lúcio', 'Mercy', 'Moira', 'Symmetra', 'Zenyatta'];
@@ -55,7 +63,7 @@ function cleanData(characters,numbers){
     newCharacters.push("Other");
     newNumbers.push(remainder);
   }
-  const colors = colorAssignment(newCharacters);
+  const colors = colorAssignment(newCharacters,'characters');
   const data =  {
     labels: newCharacters,
     datasets: [{
@@ -107,8 +115,15 @@ function specificData(key,dataDict){
 }
 
 
-function colorAssignment(characters){
+function colorAssignment(characters,dataType){
   let colors = [];
+  let colorDictionary;
+  if (dataType == 'characters'){
+    colorDictionary = characterColors;
+  }
+  else{
+    colorDictionary = roleColors;
+  }
   for (let character of characters){
     if (character in colorDictionary){
       colors.push(colorDictionary[character]);
@@ -187,8 +202,8 @@ export class Graph extends React.Component {
         labels: graphData.labels,
         datasets: [{
           data: graphData.numbers,
-          backgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080'],
-          hoverBackgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
+          backgroundColor:colorAssignment(graphData.labels, "role"),
+          hoverBackgroundColor: colorAssignment(graphData.labels, "role")
         }]
       };
     }
@@ -198,7 +213,7 @@ export class Graph extends React.Component {
         datasets: [{
           data: graphData.numbers,
           backgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080'],
-          hoverBackgroundColor: [	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
+          hoverBackgroundColor:[	'	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
         }]
         }
     }
@@ -207,16 +222,18 @@ export class Graph extends React.Component {
         let dataDict = this.makeDataDict(graphData);
         data = specificData(this.state.title,dataDict);
     }
-    let colors = ['	#6495ED', '	#FF8C00', '	#228B22', '#F08080']
+    
     if (graphData.data.length > 0){
+      let barLabels = []
+      for(let i = 0; i<graphData.data.length; i++){
+        barLabels.push(graphData.data[i].barLabel[0])
+      }
+      let colors = colorAssignment(barLabels, "role")
       for(let i = 0; i < graphData.data.length; i++){
-        let backgroundColor = []
-        for(let j = 0; j< graphData.data[i].numbers.length; j++){
-          backgroundColor.push(colors[i])
-        }
+        let barColor = colors[i]
         let dataset = {data:graphData.data[i].numbers, 
-          backgroundColor: backgroundColor,
-          hoverBackgroundColor:  backgroundColor,
+          backgroundColor: colors[i],
+          hoverBackgroundColor:  colors[i],
           label:graphData.data[i].barLabel}
         datasets.push(dataset);
       }

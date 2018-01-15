@@ -16,7 +16,6 @@ import { switchLanguage } from '../../modules/Intl/IntlActions';
 
 export class App extends Component {
   constructor(props) {
-    console.log("app constructed?");
     super(props);
     this.state = { isMounted: false };
   }
@@ -30,14 +29,12 @@ export class App extends Component {
   };
 
   render() {
-    console.log("rendering app on the client side now");
     return (
       <div>
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
         <div>
           <Helmet
             title="Pass Into the Iris"
-            titleTemplate="%s - Blog App"
             meta={[
               { charset: 'utf-8' },
               {
@@ -73,7 +70,7 @@ App.propTypes = {
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
-  console.log("mapping the props from store");
+  //console.log("mapping the props from store");
   return {
     intl: store.intl,
   };

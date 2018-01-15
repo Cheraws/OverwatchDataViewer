@@ -4,8 +4,6 @@ import { ADD_POST, ADD_POSTS, DELETE_POST } from './PostActions';
 const initialState = { data: [] };
 
 const PostReducer = (state = initialState, action) => {
-  console.log("Saving the data into the Post,type below");
-  console.log(action.type);
   switch (action.type) {
     case ADD_POST :
       return {

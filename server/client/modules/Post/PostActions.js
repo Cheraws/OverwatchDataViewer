@@ -33,7 +33,6 @@ export function addPosts(posts) {
 }
 
 export function fetchPosts() { 
-  console.log("I am currently fetching posts");
   return (dispatch) => {
     return callApi('posts').then(res => {
       dispatch(addPosts(res.posts));

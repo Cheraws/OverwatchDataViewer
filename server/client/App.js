@@ -13,7 +13,6 @@ import routes from './routes';
 require('./main.css');
 
 export default function App(props) {
-  console.log("outside version?");
   return (
     <Provider store={props.store}>
       <IntlWrapper>
